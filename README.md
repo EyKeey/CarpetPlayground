@@ -1,2 +1,3 @@
-# RogueRacer
-A prototype of a mobile game that incorporates the roguelike and racing genres.
+# CarpetPlayground
+
+A gateway you can use to return to your childhood.
