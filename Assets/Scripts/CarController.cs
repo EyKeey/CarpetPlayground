@@ -23,8 +23,8 @@ public class CarController : MonoBehaviour
 
     private void FixedUpdate()
     {
-        HandleSpeed();
         HandleRotation();
+        HandleMovement();
     }
 
     private void HandleRotation()
@@ -40,8 +40,7 @@ public class CarController : MonoBehaviour
 
         rb.MoveRotation(rb.rotation * turnRotation);
     }
-
-    private void HandleSpeed()
+    private void HandleMovement()
     {
         if (inputManager.isReversing)
         {
@@ -61,4 +60,16 @@ public class CarController : MonoBehaviour
         Vector3 velocity = transform.forward * currentSpeed;
         rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        currentSpeed = 0;
+        targetSpeed = 0;
+    }
+
+    private void OnCollisionExit(Collision collision)
+    {
+        targetSpeed = carSpeed;
+    }
+
 }
