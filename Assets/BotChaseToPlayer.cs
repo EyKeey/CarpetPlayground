@@ -65,13 +65,10 @@ public class BotChaseToPlayer : MonoBehaviour
     }
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Player"))
-        {
             currentSpeed = 0;
             targetSpeed = 0;
             rb.velocity = Vector3.zero;
             StartCoroutine(WaitAfterCollision());
-        }
     }
 
     private IEnumerator WaitAfterCollision()
