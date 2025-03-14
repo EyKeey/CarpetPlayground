@@ -10,14 +10,13 @@ public class BotChaseToPlayer : MonoBehaviour
     [SerializeField] private float acceleration;
     [SerializeField] private float maxTurnAnglePerSecond;
 
+    [HideInInspector] public float targetSpeed;
+    [HideInInspector] public float currentSpeed;
+    [HideInInspector] public bool isWaitingAfterCollision;
 
     private Transform player;
     private Rigidbody rb;
-    private float targetSpeed;
-    private float currentSpeed;
     private Vector3 direction;
-    private bool isWaitingAfterCollision = false;
-    private float collisionWaitTime = 3f;
 
     private void Start()
     {
@@ -63,18 +62,5 @@ public class BotChaseToPlayer : MonoBehaviour
         Vector3 velocity = transform.forward * currentSpeed;
         rb.velocity = new Vector3(velocity.x, rb.velocity.y, velocity.z);
     }
-    private void OnCollisionEnter(Collision collision)
-    {
-            currentSpeed = 0;
-            targetSpeed = 0;
-            rb.velocity = Vector3.zero;
-            StartCoroutine(WaitAfterCollision());
-    }
-
-    private IEnumerator WaitAfterCollision()
-    {
-        isWaitingAfterCollision = true;
-        yield return new WaitForSeconds(collisionWaitTime);
-        isWaitingAfterCollision = false;
-    }
+    
 }
