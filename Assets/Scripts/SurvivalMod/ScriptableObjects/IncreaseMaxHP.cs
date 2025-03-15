@@ -9,7 +9,7 @@ public class IncreaseMaxHP : UpgradeType
 
     public override void ApplyUpgrade(GameObject player, CarController car)
     {
-        Player playerHealth = player.GetComponent<Player>();
+        PlayerHealth playerHealth = player.GetComponent<PlayerHealth>();
 
         playerHealth.maxHealth += playerHealth.maxHealth * maxHPIncrease;
     }

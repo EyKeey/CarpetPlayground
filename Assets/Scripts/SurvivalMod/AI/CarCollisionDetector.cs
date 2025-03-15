@@ -27,16 +27,30 @@ public class CarCollisionDetector : MonoBehaviour
         botCTP.targetSpeed = 0;
         rb.velocity = Vector3.zero;
         PlayCrashSound();
-        StartCoroutine(WaitAfterCollision());
+        HandleCollision();
 
         if(collision.gameObject.CompareTag("Player"))
         {
-            collision.gameObject.GetComponent<Player>().TakeDamage(damage);
+            collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
         if(collision.gameObject.CompareTag("Bot"))
         {
             collision.gameObject.GetComponent<Bot>().TakeDamage(damage);
         }
+    }
+
+    private void HandleCollision()
+    {
+        StartCoroutine(WaitAfterCollision());
+        
+        Vector3 rayOrigin = transform.position + transform.forward * 2f + transform.up * 1f;
+        RaycastHit hit;
+        
+        if (Physics.Raycast(rayOrigin, transform.forward, out hit, 100f))
+        {
+            Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
+        }
+        Debug.DrawRay(rayOrigin, transform.forward * 100f, Color.red);
     }
 
     private IEnumerator WaitAfterCollision()

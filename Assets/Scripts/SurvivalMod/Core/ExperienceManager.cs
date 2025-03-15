@@ -24,6 +24,11 @@ public class ExperienceManager : MonoBehaviour
         }
     }
 
+    private void Start()
+    {
+        UIManager.instance.UpdateXPSlider(currentExperience, maxExperience);
+    }
+
     public void IncreaseExperience(float amount)
     {
         currentExperience += amount;
@@ -48,6 +53,6 @@ public class ExperienceManager : MonoBehaviour
 
         }
 
-        UIManager.instance.UpdateSlider(currentExperience, maxExperience);
+        UIManager.instance.UpdateXPSlider(currentExperience, maxExperience);
     }   
 }

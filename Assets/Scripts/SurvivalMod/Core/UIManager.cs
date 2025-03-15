@@ -8,6 +8,8 @@ public class UIManager : MonoBehaviour
     public static UIManager instance;
 
     [SerializeField] private GameObject xpSlider;
+    [SerializeField] private GameObject healthBar;
+    public Transform turboButton;
 
     private void Awake()
     {
@@ -21,7 +23,7 @@ public class UIManager : MonoBehaviour
         }
     }
 
-    public void UpdateSlider(float currentXP, float maxXP)
+    public void UpdateXPSlider(float currentXP, float maxXP)
     {
         if(xpSlider != null)
         {
@@ -29,4 +31,12 @@ public class UIManager : MonoBehaviour
         }
     }
 
+    public void UpdateHealthBar(float currentHealth, float maxHealth)
+    {
+
+        if (healthBar != null)
+        {
+            healthBar.GetComponent<Slider>().value = currentHealth / maxHealth;
+        }
+    }
 }
