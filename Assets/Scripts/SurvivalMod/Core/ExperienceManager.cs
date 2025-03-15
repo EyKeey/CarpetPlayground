@@ -10,6 +10,7 @@ public class ExperienceManager : MonoBehaviour
     [HideInInspector] public float currentExperience = 0;
     [HideInInspector] private float currentLevel = 1;
 
+    [SerializeField] private Transform upgradePanelUI;
 
     private void Awake()
     {
@@ -27,7 +28,7 @@ public class ExperienceManager : MonoBehaviour
     {
         currentExperience += amount;
         UpdateLevel();
-    }
+     }
 
     public void UpdateLevel()
     {
@@ -36,8 +37,17 @@ public class ExperienceManager : MonoBehaviour
             currentExperience = 0;
             maxExperience *= 1.3f;
             currentLevel++;
+
+            //GameManager.instance.Pause();
+            Time.timeScale = 0;
+
+            var upgrades = UpgradeManager.instance.GetRandomUpgrade(3);
+
+            upgradePanelUI.gameObject.SetActive(true);
+            upgradePanelUI.GetComponent<UpgradePanelUI>().ShowCards(upgrades, GameObject.FindGameObjectWithTag("Player"), FindObjectOfType<CarController>());
+
         }
-        
+
         UIManager.instance.UpdateSlider(currentExperience, maxExperience);
     }   
 }

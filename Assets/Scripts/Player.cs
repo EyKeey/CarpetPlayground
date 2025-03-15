@@ -5,8 +5,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-    [SerializeField] private int maxHealth;
-    [SerializeField] private int currentHealth;
+    [HideInInspector] public float maxHealth;
+    [SerializeField] private float currentHealth;
 
     private void Start()
     {

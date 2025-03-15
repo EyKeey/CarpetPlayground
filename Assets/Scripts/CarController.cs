@@ -5,9 +5,9 @@ public class CarController : MonoBehaviour
 {
     [Header("Car Settings")]
     [SerializeField] public float carSpeed = 80f;
+    [SerializeField] public float turnSpeed = 60f;
     [SerializeField] private float reverseSpeed = 60f;
     [SerializeField] private float acceleration = 40;
-    [SerializeField] private float turnSpeed = 60f;
 
     private float targetSpeed;
     private float currentSpeed = 0f;
