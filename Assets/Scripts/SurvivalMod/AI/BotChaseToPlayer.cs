@@ -13,6 +13,7 @@ public class BotChaseToPlayer : MonoBehaviour
     [HideInInspector] public float targetSpeed;
     [HideInInspector] public float currentSpeed;
     [HideInInspector] public bool isWaitingAfterCollision;
+    [HideInInspector] public bool isReversing;
 
     private Transform player;
     private Rigidbody rb;
@@ -52,6 +53,9 @@ public class BotChaseToPlayer : MonoBehaviour
         if (Vector3.Angle(transform.forward, direction) > 15)
         {
             targetSpeed = carSpeed * 0.6f;
+        }else if (isReversing)
+        {
+            targetSpeed = -carSpeed;
         }
         else
         {

@@ -21,15 +21,37 @@ public class CarCollisionDetector : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    private void FixedUpdate()
+    {
+        
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + transform.up * 2f, transform.forward, out hit, 20f))
+        {
+            if(!hit.collider.CompareTag("Player")){
+                botCTP.isReversing = true;
+            }
+        }
+        else
+        {
+            botCTP.isReversing = false;
+        }
+
+    }
+
     private void OnCollisionEnter(Collision collision)
     {
+        if(collision.gameObject.CompareTag("Ground"))
+        {
+            return;
+        }
+
         botCTP.currentSpeed = 0;
         botCTP.targetSpeed = 0;
         rb.velocity = Vector3.zero;
         PlayCrashSound();
-        HandleCollision();
+        StartCoroutine(WaitAfterCollision());
 
-        if(collision.gameObject.CompareTag("Player"))
+        if (collision.gameObject.CompareTag("Player"))
         {
             collision.gameObject.GetComponent<PlayerHealth>().TakeDamage(damage);
         }
@@ -37,20 +59,6 @@ public class CarCollisionDetector : MonoBehaviour
         {
             collision.gameObject.GetComponent<Bot>().TakeDamage(damage);
         }
-    }
-
-    private void HandleCollision()
-    {
-        StartCoroutine(WaitAfterCollision());
-        
-        Vector3 rayOrigin = transform.position + transform.forward * 2f + transform.up * 1f;
-        RaycastHit hit;
-        
-        if (Physics.Raycast(rayOrigin, transform.forward, out hit, 100f))
-        {
-            Debug.Log("Raycast hit: " + hit.collider.gameObject.name);
-        }
-        Debug.DrawRay(rayOrigin, transform.forward * 100f, Color.red);
     }
 
     private IEnumerator WaitAfterCollision()

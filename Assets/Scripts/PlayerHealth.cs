@@ -26,7 +26,7 @@ public class PlayerHealth : MonoBehaviour
             Regenerate();
             lastRegenerationTime = Time.time;
         }
-        Debug.Log("Player health: " + currentHealth + "/ Max health: " + maxHealth);
+      
     }
 
     public void TakeDamage(int damage)

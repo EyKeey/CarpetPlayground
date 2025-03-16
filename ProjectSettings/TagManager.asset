@@ -8,6 +8,8 @@ TagManager:
   - Ground
   - Checkpoint
   - Bot
+  - Ball
+  - Goal
   layers:
   - Default
   - TransparentFX
