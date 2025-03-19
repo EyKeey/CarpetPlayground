@@ -11,7 +11,9 @@ public class PlayerHealth : MonoBehaviour
     [HideInInspector] public bool isRegenerationActive = false;
     [HideInInspector] public float regenerationRate = 0;
     [HideInInspector] public float regenerationCooldown = 8f;
+    [HideInInspector] public bool isDamageable = true;
     private float lastRegenerationTime = 0;
+    
 
     private void Start()
     {
@@ -31,6 +33,11 @@ public class PlayerHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
+        if (!isDamageable)
+        {
+            return;
+        }
+
         currentHealth -= damage;
         UIManager.instance.UpdateHealthBar(currentHealth, maxHealth);
 
