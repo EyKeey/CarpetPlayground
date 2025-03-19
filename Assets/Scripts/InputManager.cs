@@ -12,16 +12,24 @@ public class InputManager : MonoBehaviour
     private void Awake()
     {
         if (Instance == null)
+        { 
             Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
         else
             Destroy(gameObject);
     }
 
     private void Update()
     {
+        // Hem mobil hem de PC kontrolü al
         HandleTouchInput();
+        HandlePCInput();
     }
 
+    /// <summary>
+    /// Mobil (Touch) Kontrolleri
+    /// </summary>
     void HandleTouchInput()
     {
         leftPressed = false;
@@ -46,13 +54,36 @@ public class InputManager : MonoBehaviour
             }
         }
 
-        if (leftPressed && !rightPressed)
-            horizontalInput = -1f;
-        else if (rightPressed && !leftPressed)
-            horizontalInput = 1f;
-        else
-            horizontalInput = 0f;
+        // Touch kontrolünden gelen input
+        if (activeTouches > 0)
+        {
+            if (leftPressed && !rightPressed)
+                horizontalInput = -1f;
+            else if (rightPressed && !leftPressed)
+                horizontalInput = 1f;
+            else
+                horizontalInput = 0f;
 
-        isReversing = leftPressed && rightPressed;
+            isReversing = leftPressed && rightPressed;
+        }
+    }
+
+    /// <summary>
+    /// PC (Keyboard) Kontrolleri
+    /// </summary>
+    void HandlePCInput()
+    {
+        // Eðer hiç dokunmatik yoksa, PC inputunu al
+        if (Input.touchCount == 0)
+        {
+            horizontalInput = Input.GetAxisRaw("Horizontal"); // A/D veya Sol/Sað ok tuþlarý
+
+            // Geri gitmek için "S" ya da "DownArrow" tuþuna basýlýrsa
+            isReversing = Input.GetKey(KeyCode.S) || Input.GetKey(KeyCode.DownArrow);
+
+            // Debug için hangi tuþlara basýldýðýný takip etmek istersen
+            leftPressed = Input.GetKey(KeyCode.A) || Input.GetKey(KeyCode.LeftArrow);
+            rightPressed = Input.GetKey(KeyCode.D) || Input.GetKey(KeyCode.RightArrow);
+        }
     }
 }
